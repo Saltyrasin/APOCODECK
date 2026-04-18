@@ -41,10 +41,7 @@ The entire stack is deployed via a single modular bash script:
 # 1. Download the raw script directly
 wget https://raw.githubusercontent.com/Saltyrasin/APOCODECK/main/cyberdeck_setup.sh
 
-# 2. Give the script permission to execute
-chmod +x cyberdeck_setup.sh
-
-# 3. Run it as root (the script requires this)
+# 2. Run it as root (the script requires this)
 sudo bash cyberdeck_setup.sh
 ```
 
