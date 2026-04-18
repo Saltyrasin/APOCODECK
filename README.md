@@ -1,5 +1,5 @@
-# APOC DECK
-### *When the grid goes dark — APOC DECK stays on.*
+# APOCODECK
+### *When the grid goes dark — APOCODECK stays on.*
 
 ```
  █████╗ ██████╗  ██████╗  ██████╗██████╗ ███████╗ ██████╗██╗  ██╗
@@ -14,9 +14,9 @@
 
 ## Overview
 
-APOC DECK is a self-contained, offline-first cyberdeck built on a **Raspberry Pi 5 8GB** running **Debian Bookworm 64-bit (ARM64)**. It is designed to operate fully independently of the internet — combining offensive cybersecurity tooling, offline reference systems, emergency communications, and survival utilities into a single portable platform.
+APOCODECK is a self-contained, offline-first cyberdeck built on a **Raspberry Pi 5 8GB** (while the Raspberry Pi 5 is recommended, it is not necessary) running **Debian Bookworm 64-bit (ARM64)** (The chosen OS is necessary so as not to cause conflicts with the packages). It is designed to operate fully independently of the internet — combining offensive cybersecurity tooling, offline reference systems, emergency communications, and survival utilities into a single portable platform.
 
-Whether the scenario is a penetration test in a dead-zone, a grid-down emergency, or a field operation with no infrastructure, APOC DECK is built to function.
+Whether the scenario is a penetration test in a dead zone, a grid-down emergency, or a field operation with no infrastructure, APOCODECK is built to function.
 
 ---
 
@@ -258,7 +258,7 @@ ollama run llama3.2:3b
 
 ## License & Use
 
-APOC DECK is a personal build project. The setup script and documentation are free to use, modify, and redistribute. All included software retains its original license. Use responsibly.
+APOCODECK is a personal build project. The setup script and documentation are free to use, modify, and redistribute. All included software retains its original license. Use responsibly.
 
 ---
 
