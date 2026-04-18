@@ -159,33 +159,52 @@ https://apt.metasploit.com/ buster main" \
     fi
 
     info "Extracting rockyou.txt and symlinking to /usr/share/wordlists/..."
-    ROCKYOU_GZ="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.gz"
+    
+    # 1. ALWAYS create the wordlists directory first
+    mkdir -p /usr/share/wordlists
+
+    # 2. Extract RockYou (SecLists stores it as a .tar.gz)
+    ROCKYOU_TAR="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz"
     ROCKYOU_TXT="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
-    if [[ -f "$ROCKYOU_GZ" ]]; then
-        gunzip -f "$ROCKYOU_GZ"
+    
+    if [[ -f "$ROCKYOU_TAR" ]]; then
+        tar -xzf "$ROCKYOU_TAR" -C /usr/share/seclists/Passwords/Leaked-Databases/
     fi
+
     if [[ -f "$ROCKYOU_TXT" ]]; then
-        mkdir -p /usr/share/wordlists
         ln -sf "$ROCKYOU_TXT" /usr/share/wordlists/rockyou.txt
         success "rockyou.txt available at /usr/share/wordlists/rockyou.txt"
     else
         warn "rockyou.txt not found — SecLists clone may have failed."
     fi
 
+    echo ""
+    read -rp "$(echo -e "${WHITE}[?] Download additional password lists? (about 179.58 MB) [Y/n]: ${NC}")" ans_lists
+    
     # =======================================================
     # DOWNLOADING OTHER PASSWORD LISTS...
     # =======================================================
-    echo ""
-    read -rp "$(echo -e "${WHITE}[?] Download additional top-10k password list? [Y/n]: ${NC}")" ans_lists
-    
+
     if [[ ! "$ans_lists" =~ ^[Nn]$ ]]; then
         info "Downloading 10k-most-common password list..."
         wget -q "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt" -O /usr/share/wordlists/top10k.txt
         success "top10k.txt available at /usr/share/wordlists/top10k.txt"
+
+        info "Downloading top-20-common-SSH-passwords password list..."
+        wget -q "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/top-20-common-SSH-passwords.txt" -O /usr/share/wordlists/top-20-common-SSH-passwords.txt
+        success "top-20-common-SSH-passwords.txt available at /usr/share/wordlists/top-20-common-SSH-passwords.txt"
+
+        info "Downloading probable-v2_top-12000 password list..."
+        wget -q "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/probable-v2_top-12000.txt" -O /usr/share/wordlists/probable-v2_top-12000.txt
+        success "probable-v2_top-12000.txt available at /usr/share/wordlists/probable-v2_top-12000.txt"
+
+        info "Downloading default-passwords password list..."
+        wget -q "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/default-passwords.txt" -O /usr/share/wordlists/default-passwords.txt
+        success "default-passwords.txt available at /usr/share/wordlists/default-passwords.txt"
+        
     else
         info "Skipping additional password lists."
     fi
-    # =======================================================
 
     info "Installing additional recon tools..."
     apt-get install -y -qq \
@@ -202,7 +221,6 @@ https://apt.metasploit.com/ buster main" \
 
     success "Offensive cyber tools installed."
 }
-
 # ============================================================
 # MODULE 2: OFFLINE MAPS
 # ============================================================
