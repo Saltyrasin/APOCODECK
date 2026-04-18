@@ -45,7 +45,7 @@ wget https://raw.githubusercontent.com/Saltyrasin/APOCODECK/main/cyberdeck_setup
 chmod +x cyberdeck_setup.sh
 
 # 3. Run it as root (the script requires this)
-sudo ./cyberdeck_setup.sh
+sudo bash cyberdeck_setup.sh
 ```
 
 The script will prompt you to select which modules to install. All modules are optional and independent.
