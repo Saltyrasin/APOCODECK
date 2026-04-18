@@ -38,7 +38,14 @@ Whether the scenario is a penetration test in a dead zone, a grid-down emergency
 The entire stack is deployed via a single modular bash script:
 
 ```bash
-sudo bash cyberdeck_setup.sh
+# 1. Download the raw script directly
+wget https://raw.githubusercontent.com/Saltyrasin/APOCODECK/main/cyberdeck_setup.sh
+
+# 2. Give the script permission to execute
+chmod +x cyberdeck_setup.sh
+
+# 3. Run it as root (the script requires this)
+sudo ./cyberdeck_setup.sh
 ```
 
 The script will prompt you to select which modules to install. All modules are optional and independent.
