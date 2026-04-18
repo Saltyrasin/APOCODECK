@@ -131,8 +131,6 @@ install_offensive() {
         john hydra medusa \
         hashcat
 
-
-
     info "Installing wireless tools..."
     apt-get install -y -qq \
         aircrack-ng reaver bully \
@@ -152,6 +150,13 @@ https://apt.metasploit.com/ buster main" \
         warn "Metasploit already installed, skipping."
     fi
 
+    info "Installing SecLists wordlists..."
+    if [[ ! -d /usr/share/seclists ]]; then
+        git clone --depth 1 https://github.com/danielmiessler/SecLists.git \
+            /usr/share/seclists
+    else
+        warn "SecLists already present at /usr/share/seclists"
+    fi
 
     info "Extracting rockyou.txt and symlinking to /usr/share/wordlists/..."
     ROCKYOU_GZ="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.gz"
@@ -167,36 +172,20 @@ https://apt.metasploit.com/ buster main" \
         warn "rockyou.txt not found — SecLists clone may have failed."
     fi
 
-    echo ""
-    read -rp "$(echo -e "${WHITE}[?] Download additional password lists? (about 179.58 MB) [Y/n]: ${NC}")" ans_lists
-    
     # =======================================================
     # DOWNLOADING OTHER PASSWORD LISTS...
     # =======================================================
-
+    echo ""
+    read -rp "$(echo -e "${WHITE}[?] Download additional top-10k password list? [Y/n]: ${NC}")" ans_lists
+    
     if [[ ! "$ans_lists" =~ ^[Nn]$ ]]; then
         info "Downloading 10k-most-common password list..."
         wget -q "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt" -O /usr/share/wordlists/top10k.txt
         success "top10k.txt available at /usr/share/wordlists/top10k.txt"
-
-
-        info "Downloading top-20-common-SSH-passwords password list..."
-        wget -q "https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/top-20-common-SSH-passwords.txt" -O /usr/share/wordlists/top-20-common-SSH-passwords.txt
-        success "top-20-common-SSH-passwords.txt available at /usr/share/wordlists/top-20-common-SSH-passwords.txt"
-
-
-        info "Downloading probable-v2_top-12000 password list..."
-        wget -q "https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/probable-v2_top-12000.txt" -O /usr/share/wordlists/probable-v2_top-12000.txt
-        success "probable-v2_top-12000.txt available at /usr/share/wordlists/probable-v2_top-12000.txt"
-
-
-        info "Downloading default-passwords password list..."
-        wget -q "https://github.com/danielmiessler/SecLists/blob/master/Passwords/Default-Credentials/default-passwords.txt -O /usr/share/wordlists/default-passwords.txt
-        success "default-passwords.txt available at /usr/share/wordlists/default-passwords.txt"
-        
     else
         info "Skipping additional password lists."
     fi
+    # =======================================================
 
     info "Installing additional recon tools..."
     apt-get install -y -qq \
